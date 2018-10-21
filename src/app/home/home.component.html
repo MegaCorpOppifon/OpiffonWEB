@@ -1,0 +1,95 @@
+<div class="center">
+  <h1>Experts</h1>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4" *ngFor="let profile of profiles">
+        <!--Carousel Wrapper-->
+        <mdb-carousel [isControls]="true" class="carousel-multi-item multi-animation" [type]="'carousel-multi-item'" [animation]="'slide'">
+          <div id="carousel">
+            <!--First slide-->
+            <div *ngFor="let profile of profiles">
+              <mdb-carousel-item>
+                <div>
+                  <mdb-card>
+                    <mdb-card-img class="h-75" href="/expertprofile" src={{profile}} alt="Card image cap"></mdb-card-img>
+                    <mdb-card-body>
+                      <mdb-card-title>
+                        <h4>Card title</h4>
+                      </mdb-card-title>
+                      <p>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                      <a href="#" mdbBtn color="primary" class="waves-light" mdbWavesEffect>Read more</a>
+                    </mdb-card-body>
+                  </mdb-card>
+                </div>
+              </mdb-carousel-item>
+            </div>
+          </div>
+          <!--/ slides -->
+        </mdb-carousel>
+        <!--/.Carousel Wrapper-->
+      </div>
+    </div>
+
+    <!--Navbar with Search button and Calender button-->
+    <nav id="buttonNavbar" class=" container navbar navbar-light cyan darken-3 lighten-4 mb-4">
+
+      <!-- Search button -->
+      <button type="button" (click)="searchClick()" class="btn btn-mdb-color"><i class="fa fa-search mr-1"></i>
+        Search expert</button>
+
+      <!-- Calender button -->
+      <button type="button" (click)="calendarClick()" class="btn btn-mdb-color"><i class="fa fa-calendar mr-1"></i> Calendar</button>
+
+    </nav>
+    <!--/.Navbar-->
+
+    <div id="feedbox" class=" container row">
+
+      <!--Appointment column-->
+      <div class="col-3">
+        <div class="list-group">
+          <a href="#" class="list-group-item active waves-effect disabled">
+            Appointments
+          </a>
+          <div *ngFor="let appointment of appointments">
+            <a href="#" class="list-group-item list-group-item-action waves-effect">
+              {{appointment}}
+            </a>
+          </div>
+        </div>
+      </div>
+      <!--/.Appointment column-->
+
+      <!--Feed column-->
+      <div class="col-6">
+        <div class="list-group">
+          <a href="#" class="list-group-item active waves-effect disabled">
+            News feed
+          </a>
+          <div *ngFor="let appointment of appointments">
+            <a href="#" class="list-group-item list-group-item-action waves-effect">
+              {{appointment}}
+            </a>
+          </div>
+        </div>
+      </div>
+      <!--/.Feed column-->
+
+      <!--Subscriber column-->
+      <div class="col-3">
+        <div class="list-group">
+          <a href="#" class="list-group-item active waves-effect disabled">
+            Subscribtions
+          </a>
+          <div *ngFor="let appointment of appointments">
+            <a href="#" class="list-group-item list-group-item-action waves-effect">
+              {{appointment}}
+            </a>
+          </div>
+        </div>
+      </div>
+      <!--/.Subscriber column-->
+
+    </div>
+  </div>
+</div>

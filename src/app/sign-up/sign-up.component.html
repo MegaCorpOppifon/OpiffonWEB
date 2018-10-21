@@ -1,0 +1,127 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="card bg-white mb-3 shadow-sm">
+      <div class="card-body text-left">
+        <h5 class="card-title">Who are you?</h5>
+        <form [formGroup]="whoAreYouForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <input type="text" class="form-control" formControlName="firstName" placeholder="First name">
+            <div *ngIf="whoAreYouSubmit && f.firstName.invalid" class="alert alert-danger">
+              First Name is required
+            </div>
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" formControlName="lastName" placeholder="Last name">
+            <div *ngIf="whoAreYouSubmit && f.lastName.invalid" class="alert alert-danger">
+              Last Name is required
+            </div>
+          </div>
+          <div class="form-group">
+            <input type="email" class="form-control" formControlName="email" placeholder="Email">
+            <div *ngIf="whoAreYouSubmit && f.email.invalid" class="alert alert-danger">
+              <div *ngIf="f.email.errors.required">Email is required</div>
+              <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <input type="password" class="form-control" formControlName="password" placeholder="Password">
+            <div *ngIf="whoAreYouSubmit && f.password.invalid" class="alert alert-danger">
+              <div *ngIf="f.password.errors.required">Password is required</div>
+              <div *ngIf="f.password.errors.minlength">Password must be at least 8 characters</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <input type="password" class="form-control" formControlName="confirmPassword" placeholder="Confirm password">
+            <div *ngIf="whoAreYouSubmit && f.confirmPassword.errors?.MatchPassword" class="alert alert-danger">
+              Passwords must match
+            </div>
+          </div>
+          <div class="form-group">
+            <input type="string" class="form-control" formControlName="city" placeholder="City">
+            <div *ngIf="whoAreYouSubmit && f.city.invalid" class="alert alert-danger">
+              City is required
+            </div>
+          </div>
+          <div class="form-group">
+            <input type="string" class="form-control" formControlName="phoneNumber" placeholder="Phone number">
+            <div *ngIf="whoAreYouSubmit && f.phoneNumber.invalid" class="alert alert-danger">
+              phoneNumber is required
+            </div>
+          </div>
+          <div class="form-group">
+            <input type="date" class="form-control" formControlName="birthday" placeholder="birthday">
+            <div *ngIf="whoAreYouSubmit && f.birthday.invalid" class="alert alert-danger">
+              Birthday is required
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input type="radio" formControlName="gender" value=male class="form-check-input">
+                Male
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input type="radio" formControlName="gender" value=female class="form-check-input">
+                Female
+              </label>
+            </div>
+          </div>
+          <div class="form-group">
+            <input type="string" formControlName="category" class="form-control" placeholder="Add categories">
+            <div *ngIf="whoAreYouSubmit && f.categories.invalid" class="alert alert-danger">
+              Categories is required
+            </div>
+          </div>
+
+          <!-- Labels -->
+          <div class="form-group">
+            <span *ngFor="let category of categories" class="badge badge-info">
+              {{category}}
+              <button type="button" class="btn btn-danger btn-sm" (click)="removeCategory(category)">X</button>
+            </span>
+            
+            <div class="d-flex flex-row-reverse">
+                <button class="btn btn-success" type="button" (click)="addCategory()">Add category</button>
+              </div>
+          </div>
+
+          <h5 class="card-title">Are you an expert?</h5>
+          <div class="form-group">
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input type="radio" formControlName="expert" [value]=false class="form-check-input">
+                No, skip
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input type="radio" formControlName="expert" [value]=true class="form-check-input">
+                Yes, create my page
+              </label>
+            </div>
+          </div>
+
+          <div *ngIf=whoAreYouForm.value.expert>
+            <h5 class="card-title">What kind of expert are you</h5>
+            <div class="form-group">
+              <input type="string" class="form-control" formControlName="expertCategory" placeholder="Category">
+            </div>
+            <div class="form-group">
+              <input type="string" class="form-control" formControlName="expertSubCategory" placeholder="Sub category">
+            </div>
+            <div class="form-group">
+              <textarea type="string" class="form-control" formControlName="description" placeholder="Type a description about your self"></textarea>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="d-flex flex-row-reverse">
+              <button class="btn btn-primary" type="submit" routerLink="/">Submit</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
