@@ -1,5 +1,7 @@
+import { HttpService } from './../shared/http.service';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
+import { User } from '../shared/models/Models';
 
 @Component({
   selector: 'app-search',
@@ -7,35 +9,37 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./search.component.scss']
 })
 export class SearchComponent implements OnInit {
-  public mainOptions = ['Technologi', 'Health', 'Education', 'Sport', 'Psychology'];
+  public mainOptions = [];
   public mainCatagory: string;
-  public searchText: string;
+  public searchText = '';
+  public experts: User[];
 
-  public experts = [
-    { id: '1', firstName: 'Mark', lastName: 'Otto', catagory: 'Technologi' },
-    { id: '2', firstName: 'Jacob', lastName: 'Thornton', catagory: 'Health' },
-    { id: '3', firstName: 'Larry', lastName: 'Last', catagory: 'Health' },
-    { id: '4', firstName: 'John', lastName: 'Doe', catagory: 'Education' },
-    { id: '5', firstName: 'Zigi', lastName: 'Kiwi', catagory: 'Sport' },
-    { id: '6', firstName: 'Beatrice', lastName: 'Selphie', catagory: 'Psychology' },
-  ];
-
-  constructor(private router: Router) { }
+  constructor(private router: Router, private http: HttpService) { }
 
   ngOnInit() {
+    this.http.getExperts().subscribe( data => {
+      this.experts = data; } );
+    this.http.getCategories().subscribe( data => {
+      this.mainOptions = data; } );
   }
+
+  goToExpertDetails(id) {
+    this.router.navigate(['/expert', id]);
+  }
+
 // TODO Should not be case sensitive
   filterAll(arr, searchKey) {
     return arr.filter((obj) => {
       return Object.keys(obj).some((key) => {
-        return obj[key].includes(searchKey);
+        return obj[key] != null && obj[key].toString().toLowerCase()
+        .includes(searchKey.toLowerCase());
       });
     });
   }
 
   // TODO Should not be case sensitive
   filterCatagory(arr, searchKey) {
-    return arr.filter(obj => obj.catagory === searchKey );
+    return arr.filter(obj => obj.expertCategory === searchKey );
   }
 
   search() {
@@ -53,10 +57,6 @@ export class SearchComponent implements OnInit {
   public getSubCatagories(mainCatagory: string) {
     // TODO service call
     console.log(this.mainCatagory);
-  }
-
-  expertClick() {
-    this.router.navigate(['/expert']);
   }
 
 }

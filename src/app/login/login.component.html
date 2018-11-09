@@ -8,40 +8,40 @@
     non leo. Phasellus enim erat, vestibulum vel, aliquam a, posuere eu, velit. Donec ipsum massa, ullamcorper in, auctor
     et, scelerisque sed, est. Praesent vitae arcu tempor neque lacinia pretium. Praesent dapibus. Aliquam erat volutpat.
   </p>
-  <a href="#" mdbBtn color="success" class="waves-light" mdbWavesEffect>Sign up</a>
+  <a (click)="signupClick()" mdbBtn color="success" class="waves-light" mdbWavesEffect>Sign up</a>
 </div>
 
 <div class="center">
   <h1>Experts</h1>
   <div class="container">
     <div class="row">
-      <div class="col-md-4" *ngFor="let profile of profiles">
-        <!--Carousel Wrapper-->
-        <mdb-carousel [isControls]="true" class="carousel-multi-item multi-animation" [type]="'carousel-multi-item'" [animation]="'slide'">
-          <div id="carousel">
-            <!--First slide-->
-            <div *ngFor="let profile of profiles">
-              <mdb-carousel-item>
-                <div>
-                  <mdb-card>
-                    <mdb-card-img id="expertImg" src={{profile}} alt="Card image cap"></mdb-card-img>
-                    <mdb-card-body>
-                      <mdb-card-title>
-                        <h4>Card title</h4>
-                      </mdb-card-title>
-                      <p>"I'm extremly clever and talented. I can show you the world. Trust me and you will peace"</p>
-                      <a href="#" mdbBtn color="primary" class="waves-light" mdbWavesEffect>Read more</a>
-                      <br/>
-                    </mdb-card-body>
-                  </mdb-card>
-                </div>
-              </mdb-carousel-item>
+      <!-- Card deck -->
+      <div class="card-deck">
+          <!-- Card -->
+          <div *ngFor="let expert of experts" class="card mb-4">
+
+            <!--Card image-->
+            <div class="view overlay">
+              <img class="card-img-top" src={{profiles[2]}} alt="Card image cap">
+              <a href="#!">
+                <div class="mask rgba-white-slight"></div>
+              </a>
             </div>
+
+            <!--Card content-->
+            <div class="card-body elegant-color white-text rounded-bottom">
+
+              <!--Name-->
+              <h4 class="card-title">{{expert.firstName}} {{expert.lastName}}</h4>
+              <!--Description-->
+              <p class="card-text white-text mb-4">{{expert.description}}</p>
+              <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+              <a href="/expert/{{expert.id}}" mdbBtn color="primary" class="waves-light" mdbWavesEffect>Read more</a>
+
+            </div>
+
           </div>
-          <!--/ slides -->
-        </mdb-carousel>
-        <!--/.Carousel Wrapper-->
-      </div>
+          <!-- Card -->
       <a href="/search" mdbBtn color="default" class="waves-light" mdbWavesEffect>Search expert</a>
     </div>
 

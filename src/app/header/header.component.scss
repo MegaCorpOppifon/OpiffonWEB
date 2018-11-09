@@ -1,59 +1,46 @@
-.login {
-  display: block;
-      float: right;
+#basicNav {
+    float: right;
 }
 
 /* Bordered form */
 nav {
-  border: 3px solid #f1f1f1;
+border: 3px solid #f1f1f1;
 }
 
-form {
-  float: right;
+#logo {
+color: white;
 }
+
 
 /* Full-width inputs */
-input[type=text], input[type=password] {
-  width: 60%;
-  padding: 4px 4px;
-  display: inline-block;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
-  color: whitesmoke;
+input[type=text], {
+width: 60%;
+padding: 4px 4px;
+display: inline-block;
+border: 1px solid #ccc;
+box-sizing: border-box;
+color: whitesmoke;
 }
 
-input {
-  color: whitesmoke;
-}
 
-/* Set a style for all buttons */
-button {
-  margin: 8px;
-  border: none;
-  cursor: pointer;
-  width: 15%;
-}
+
 
 /* Add a hover effect for buttons */
 button:hover {
-  opacity: 0.8;
+opacity: 0.8;
 }
 
-label {
-  padding: 8px;
-  color: whitesmoke;
-}
 
 /* The "Forgot password" text */
 span.psw {
-  float: right;
-  padding-top: 16px;
+float: right;
+padding-top: 16px;
 }
 
 /* Change styles for span and cancel button on extra small screens */
 @media screen and (max-width: 300px) {
-  span.psw {
-      display: block;
-      float: right;
-  }
+span.psw {
+    display: block;
+    float: right;
+}
 }

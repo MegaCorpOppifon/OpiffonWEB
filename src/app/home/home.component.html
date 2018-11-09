@@ -1,35 +1,42 @@
 <div class="center">
-  <h1>Experts</h1>
+  <h1>Welcome {{user.firstName}}</h1>
+  <h3>Experts</h3>
   <div class="container">
     <div class="row">
-      <div class="col-md-4" *ngFor="let profile of profiles">
-        <!--Carousel Wrapper-->
-        <mdb-carousel [isControls]="true" class="carousel-multi-item multi-animation" [type]="'carousel-multi-item'" [animation]="'slide'">
-          <div id="carousel">
-            <!--First slide-->
-            <div *ngFor="let profile of profiles">
-              <mdb-carousel-item>
-                <div>
-                  <mdb-card>
-                    <mdb-card-img class="h-75" href="/expertprofile" src={{profile}} alt="Card image cap"></mdb-card-img>
-                    <mdb-card-body>
-                      <mdb-card-title>
-                        <h4>Card title</h4>
-                      </mdb-card-title>
-                      <p>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                      <a href="#" mdbBtn color="primary" class="waves-light" mdbWavesEffect>Read more</a>
-                    </mdb-card-body>
-                  </mdb-card>
-                </div>
-              </mdb-carousel-item>
-            </div>
-          </div>
-          <!--/ slides -->
-        </mdb-carousel>
-        <!--/.Carousel Wrapper-->
-      </div>
-    </div>
 
+      <!-- Card deck -->
+      <div class="card-deck">
+          <!-- Card -->
+          <div *ngFor="let expert of experts" class="card mb-4">
+
+            <!--Card image-->
+            <div class="view overlay">
+              <img class="card-img-top" src={{profiles[2]}} alt="Card image cap">
+              <a href="#!">
+                <div class="mask rgba-white-slight"></div>
+              </a>
+            </div>
+
+            <!--Card content-->
+            <div class="card-body elegant-color white-text rounded-bottom">
+
+              <!--Name-->
+              <h4 class="card-title">{{expert.firstName}} {{expert.lastName}}</h4>
+              <!--Description-->
+              <p class="card-text white-text mb-4">{{expert.description}}</p>
+              <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+              <a href="/expert/{{expert.id}}" mdbBtn color="primary" class="waves-light" mdbWavesEffect>Read more</a>
+
+            </div>
+
+          </div>
+          <!-- Card -->
+      </div>
+      <!-- Card deck -->
+    </div>
+    <ng-template #loading>
+      <mat-spinner></mat-spinner>
+    </ng-template>
     <!--Navbar with Search button and Calender button-->
     <nav id="buttonNavbar" class=" container navbar navbar-light cyan darken-3 lighten-4 mb-4">
 
@@ -37,14 +44,20 @@
       <button type="button" (click)="searchClick()" class="btn btn-mdb-color"><i class="fa fa-search mr-1"></i>
         Search expert</button>
 
+      <!-- Search button -->
+      <div *ngIf="user.isExpert">
+        <button type="button" (click)="expertClick()" class="btn btn-amber"><i class="fa fa-lightbulb-o mr-1"></i>
+          Expert Page</button>
+      </div>
+
       <!-- Calender button -->
-      <button type="button" (click)="calendarClick()" class="btn btn-mdb-color"><i class="fa fa-calendar mr-1"></i> Calendar</button>
+      <button type="button" (click)="calendarClick()" class="btn btn-mdb-color"><i class="fa fa-calendar mr-1"></i>
+        Calendar</button>
 
     </nav>
     <!--/.Navbar-->
 
     <div id="feedbox" class=" container row">
-
       <!--Appointment column-->
       <div class="col-3">
         <div class="list-group">
@@ -79,7 +92,7 @@
       <div class="col-3">
         <div class="list-group">
           <a href="#" class="list-group-item active waves-effect disabled">
-            Subscribtions
+            Favorites
           </a>
           <div *ngFor="let appointment of appointments">
             <a href="#" class="list-group-item list-group-item-action waves-effect">

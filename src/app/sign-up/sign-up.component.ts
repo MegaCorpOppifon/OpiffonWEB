@@ -1,83 +1,108 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { HttpService } from './../shared/http.service';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { UserSignUp } from './user-sign-up';
 import { PasswordValidation } from './validation';
+import { User } from '../shared/models/Models';
+import { AuthorizationService } from '../shared/authorization.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.scss']
 })
-
 export class SignUpComponent implements OnInit {
-  whoAreYouSubmit: boolean = false;
-  
-  @ViewChild('carouselVar') carousel: ElementRef
+  whoAreYouSubmit = false;
 
-  passwordPattern = "^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).{6,12}$";
-  mobileNumberPattern = "^((\\+91-?)|0)?[0-9]{10}$";
-  emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
-  categories: string[];
+  passwordPattern = '^(?=.*d)(?=.*[a-z])(?=.*[A-Z])(?!.*s).{6,12}$';
+  mobileNumberPattern = '^((\\+91-?)|0)?[0-9]{10}$';
+  emailPattern = '^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$';
+  catagories: string[];
+  interest: string;
+  subCatagory: string;
+  mainField: string;
+  category: string;
 
-  user: UserSignUp;
+  user: User;
 
-  public whoAreYouForm: FormGroup;
-
-  constructor(public fb: FormBuilder) {
-    this.user = new UserSignUp();
-    this.categories = [];
-    this.createWhoAreYouForm(fb);
+  constructor(
+    private router: Router,
+    private authenticationService: AuthorizationService, private http: HttpService
+  ) {
+    this.user = new User();
+    this.user.isExpert = false;
   }
 
   ngOnInit() {
-    
+    this.http.getCategories().subscribe( data => {
+      this.catagories = data; });
   }
 
-  get f() { return this.whoAreYouForm.controls; }
 
-  public addCategory(){
-    let category = this.whoAreYouForm.controls["category"].value;
-    this.categories.unshift(category);
-  }
-
-  public removeCategory(categoryToRemove: string){
-    let category = this.categories.find(x => x === categoryToRemove);
-    let index = this.categories.indexOf(category);
-    this.categories.splice(index, 1);
-  }
-
-  public onSubmit(){
-    this.whoAreYouSubmit = true;
-    if(this.whoAreYouForm.valid){
-      this.user.firstName = this.whoAreYouForm.controls['firstName'].value;
-      this.user.lastName = this.whoAreYouForm.controls['lastName'].value;
-      this.user.email = this.whoAreYouForm.controls['email'].value;
-      this.user.password = this.whoAreYouForm.controls['password'].value;  
-      
-      console.log(this.carousel)
+  public addInterest() {
+    if (this.interest !== '') {
+      if (this.user.interestTags === undefined) {
+        this.user.interestTags = [];
+      }
+    this.user.interestTags.push(this.interest);
     }
-    
-    console.log(this.user)
+    this.interest = '';
   }
 
-  private createWhoAreYouForm(fb: FormBuilder) {
-    this.whoAreYouForm = fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(8)]],
-      confirmPassword: ['', [Validators.required]],
-      city: ['', Validators.required],
-      phoneNumber: ['', Validators.required],
-      birthday: ['', Validators.required],
-      category: [''],
-      gender: ['male', Validators.required],
-      expert: [false, Validators.required],
-      expertCategory: [''],
-      expertSubCategory: [''],
-      description: ['']
-    }, {
-        validator: PasswordValidation.MatchPassword
-      });
+  public removeInterest(interestToRemove: string) {
+    const interest = this.user.interestTags.find(x => x === interestToRemove);
+    const index = this.user.interestTags.indexOf(interest);
+    this.user.interestTags.splice(index, 1);
   }
+
+  public addCategory() {
+    if (this.category !== '') {
+      if (this.user.expertTags === undefined) {
+        this.user.expertTags = [];
+      }
+      this.user.expertTags.push(this.subCatagory);
+    }
+    this.subCatagory = '';
+  }
+
+  public removeCategory(categoryToRemove: string) {
+    const category = this.user.expertTags.find(x => x === categoryToRemove);
+    const index = this.user.expertTags.indexOf(category);
+    this.user.expertTags.splice(index, 1);
+  }
+
+  public addMainField() {
+    if (this.mainField !== '') {
+      if (this.user.mainFields === undefined) {
+        this.user.mainFields = [];
+      }
+    this.user.mainFields.push(this.mainField);
+    }
+    this.mainField = '';
+  }
+
+  public removeMainField(mainFieldToRemove: string) {
+    const mainField = this.user.mainFields.find(x => x === mainFieldToRemove);
+    const index = this.user.mainFields.indexOf(mainField);
+    this.user.mainFields.splice(index, 1);
+  }
+
+  public onSubmit() {
+    this.whoAreYouSubmit = true;
+
+    if (this.user.password === this.user.confirmPassword) {
+      this.authenticationService.register(this.user).subscribe( data =>
+        this.authenticationService.login(this.user.email, this.user.password, result => {
+          if (result) {
+            console.log('Logged in ' + result);
+            this.router.navigate(['/home']);
+          } else {
+            console.log('not a valid user');
+          }
+        }));
+    }
+
+    console.log(this.user);
+  }
+
 }

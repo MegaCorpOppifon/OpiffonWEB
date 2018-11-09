@@ -1,0 +1,113 @@
+<ng-template #modalContent let-close="close">
+  <div class="modal-header">
+    <h5 class="modal-title">{{modalData?.event.meta.startTime | date : 'HH:mm d MMMM yyyy'}}</h5>
+    <button type="button" class="close" (click)="close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <h6>{{ modalData?.event.meta.title }}</h6>
+    <div>
+      <pre>{{ modalData?.event.meta.text }}</pre>
+    </div>
+    <div *ngFor="let participant of modalData?.event.meta.participants">
+      <p>{{participant.firstName}} {{participant.lastName}}</p>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="close()">OK</button>
+  </div>
+</ng-template>
+
+<ng-template #errorContent let-close="close">
+  <div class="modal-header">
+    <h5 class="modal-title">Error</h5>
+    <button type="button" class="close" (click)="close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    {{errorMessage}}
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-warning" (click)="close()">OK</button>
+  </div>
+</ng-template>
+
+<div class="container">
+
+  <div class="row text-center">
+    <div class="col-md-4">
+      <div class="btn-group">
+        <div class="btn btn-primary" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="activeDayIsOpen = false">
+          Previous
+        </div>
+        <div class="btn btn-outline-secondary" mwlCalendarToday [(viewDate)]="viewDate">
+          Today
+        </div>
+        <div class="btn btn-primary" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="activeDayIsOpen = false">
+          Next
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+    </div>
+    <div class="col-md-4">
+      <div class="btn-group">
+        <div class="btn btn-primary" (click)="view = CalendarView.Month" [class.active]="view === CalendarView.Month">
+          Month
+        </div>
+        <div class="btn btn-primary" (click)="view = CalendarView.Week" [class.active]="view === CalendarView.Week">
+          Week
+        </div>
+        <div class="btn btn-primary" (click)="view = CalendarView.Day" [class.active]="view === CalendarView.Day">
+          Day
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div [ngSwitch]="view">
+    <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month" [viewDate]="viewDate" [events]="events" [refresh]="refresh"
+      [activeDayIsOpen]="activeDayIsOpen" (dayClicked)="dayClicked($event.day)" (eventClicked)="handleEvent('Clicked', $event.event)"
+      (eventTimesChanged)="eventTimesChanged($event)">
+    </mwl-calendar-month-view>
+    <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week" [viewDate]="viewDate" [events]="events" [refresh]="refresh"
+      (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)">
+    </mwl-calendar-week-view>
+    <mwl-calendar-day-view *ngSwitchCase="CalendarView.Day" [viewDate]="viewDate" [events]="events" [refresh]="refresh"
+      (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)">
+    </mwl-calendar-day-view>
+  </div>
+
+  <br><br><br>
+
+  <div class="clearfix"></div>
+
+  <div class="form-group">
+    <input class="form-control" [(ngModel)]="appointment.title" name="title" placeholder="Title" type="text">
+  </div>
+  <div class="form-group">
+    <textarea class="form-control" [(ngModel)]="appointment.text" name="text" placeholder="Text" type="text"></textarea>
+  </div>
+  <div class="form-group">
+    <input class="form-control" [(ngModel)]="appointment.maxParticipants" name="maxParticipants" placeholder="Max maxParticipants"
+      type="number">
+  </div>
+  <div class="form-group">
+    <input class="form-control" type="text" mwlFlatpickr [(ngModel)]="appointment.startTime" (ngModelChange)="refresh.next()"
+      [altInput]="true" [convertModelValue]="true" [enableTime]="true" dateFormat="Y-m-dTH:i" altFormat="F j, Y H:i"
+      time_24hr="true" timeFormat="H:i">
+  </div>
+  <div class="form-group">
+    <input class="form-control" type="text" mwlFlatpickr [(ngModel)]="appointment.endTime" (ngModelChange)="refresh.next()"
+      [altInput]="true" [convertModelValue]="true" [enableTime]="true" dateFormat="Y-m-dTH:i" altFormat="F j, Y H:i"
+      time_24hr="true" timeFormat="H:i">
+  </div>
+  <div class="form-group">
+    <button type="submit" class="btn btn-primary" (click)="addEvent()">
+      Add appointment
+    </button>
+  </div>
+</div>
