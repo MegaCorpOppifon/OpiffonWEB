@@ -1,10 +1,9 @@
 import { HttpService } from './../shared/http.service';
-import { HttpClient } from '@angular/common/http';
 import { AuthorizationService } from './../shared/authorization.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
 import { User } from '../shared/models/Models';
+import { SimpleUser } from '../shared/models/simpleUser';
 
 @Component({
   selector: 'app-home',
@@ -14,44 +13,69 @@ import { User } from '../shared/models/Models';
 export class HomeComponent implements OnInit {
   public user: User;
   public experts: User[];
-  public profiles = ['assets/img/Dan.jpg', 'assets/img/Henrik.jpg', 'assets/img/Rasmus.jpg'];
+  public profiles = [
+    'assets/img/Dan.jpg',
+    'assets/img/Henrik.jpg',
+    'assets/img/Rasmus.jpg'
+  ];
   public appointments = ['appointment 1', 'appointment 2', 'appointment 3'];
+  public favorites: SimpleUser[];
 
-  constructor(private router: Router, private auth: AuthorizationService, private http: HttpService) { }
+  constructor(
+    private router: Router,
+    private auth: AuthorizationService,
+    private http: HttpService
+  ) {}
   ngOnInit() {
-    this.getUser();
-    this.http.getExperts().subscribe( data => {
+    this.getUserData();
+    this.http.getExperts().subscribe(data => {
       const randomInt = this.randomNumber(data.length - 2);
-      this.experts = data.slice(randomInt, randomInt + 3);
+      this.experts = this.shortenDescription(
+        data.slice(randomInt, randomInt + 3)
+      );
     });
-
   }
 
   randomNumber(max) {
-      return Math.floor(Math.random() * (max));
+    return Math.floor(Math.random() * max);
   }
 
-  getUser(): void {
-      this.user = this.auth.currentUser();
+  shortenDescription(experts: User[]) {
+    experts.forEach(element => {
+      if (element.description.length > 50) {
+        element.description = element.description.slice(0, 100) + '...';
+      }
+    });
+    return experts;
+  }
+
+  getUserData() {
+    this.user = this.auth.currentUser();
+    this.http.getFavorites().subscribe(data => {
+      this.favorites = data;
+    });
   }
 
   searchClick() {
     this.router.navigate(['/search']);
-}
+  }
 
-expertClick() {
-  // TODO if user has expert page
-  if (true) {
-  this.router.navigate(['/expert', this.auth.currentUser().id]);
-  // TODO if user dont have expert page
-} else {
-  // route to create expert page
-}
+  expertClick() {
+    if (this.auth.currentUser().isExpert) {
+      this.router.navigate(['/expert', this.auth.currentUser().id]);
+      // TODO if user dont have expert page
+    } else {
+      // route to create expert page
+    }
+  }
 
-}
+  favoriteClick(id: string) {
+    if (true) {
+      this.router.navigate(['/expert', id]);
+    }
+  }
 
   calendarClick() {
-  this.router.navigate(['/calendar']);
-}
-
+    this.router.navigate(['/calendar']);
+  }
 }

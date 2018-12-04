@@ -1,8 +1,7 @@
 import { Router } from '@angular/router';
-import { User } from './models/Models';
+import { User, SimpleUser } from './models/Models';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 @Injectable()
@@ -10,7 +9,7 @@ export class AuthorizationService {
   constructor(private http: HttpClient, private router: Router) { }
 
   apiUrl = 'http://localhost:51071/api/';
-  private localStorage = "megacorpworkout";
+  private localStorage = 'megacorpworkout';
 
   register(user: User) {
     const url = `${this.apiUrl}account/register`;
@@ -68,6 +67,7 @@ export class AuthorizationService {
       user.email = payload.email;
       user.firstName = payload.firstName;
       user.lastName = payload.lastName;
+      user.city = payload.city;
       if (payload.isExpert === 'True') {
         user.isExpert = true;
       } else {

@@ -1,3 +1,4 @@
+import { HttpService } from './shared/http.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
@@ -18,6 +19,7 @@ import { FooterComponent } from './footer/footer.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { ExpertProfileComponent } from './expert-profile/expert-profile.component';
 import { SearchComponent } from './search/search.component';
+import { CalendarComponent } from './calendar/calendar.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -40,6 +42,7 @@ import { ProfileComponent } from './profile/profile.component';
     SignUpComponent,
     ExpertProfileComponent,
     SearchComponent,
+    CalendarComponent,
     PageNotFoundComponent,
     ForgotPasswordComponent,
     ReviewPageComponent,
@@ -72,7 +75,8 @@ import { ProfileComponent } from './profile/profile.component';
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true
-    }
+    },
+    HttpService
   ],
   bootstrap: [AppComponent]
 })

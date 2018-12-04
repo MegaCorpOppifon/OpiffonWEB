@@ -26,6 +26,10 @@ export class ExpertProfileComponent implements OnInit {
  });
 }
 
+  addFavorite() {
+      this.http.addFavorite(this.id).subscribe();
+  }
+
   calendarClick() {
     this.router.navigate([`/calendar/${this.id}`]);
   }

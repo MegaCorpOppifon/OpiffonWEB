@@ -1,55 +1,54 @@
 /* Three image containers (use 25% for four, and 50% for two, etc) */
 .column {
-    float: left;
-    width: 33.33%;
-    padding: 5px;
-  }
-  
-  .nav a.white-text:hover {
-    color: #e0e0e0!important;
-  }
-  
-  #post {
-  margin-left: 5px;
-  }
-  
-  #label {
-    border-bottom: 2px;
-    border-bottom-style: solid;
-    border-color: darkslategrey;
-  }
-  
-  #feedbox {
-    min-height: 300px;
-    margin-bottom: 10px;
-  }
-  
-  #buttonNavbar {
-    margin-top: 10px;
-    margin-bottom: 10px;
-  }
-  
-  #carousel{
-    height: 560px;
-  }
-  
-  /* Clear floats after image containers */
-  .row::after {
-    content: "";
-    clear: both;
-    display: table;
-  }
-  
-  /* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
-  @media screen and (max-width: 500px) {
-    .column {
-      width: 100%;
-    }
-  }
-  .center {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+  float: left;
+  width: 33.33%;
+  padding: 5px;
+}
+
+.nav a.white-text:hover {
+  color: #e0e0e0!important;
+}
+
+#post {
+margin-left: 5px;
+}
+
+#label {
+  border-bottom: 2px;
+  border-bottom-style: solid;
+  border-color: darkslategrey;
+}
+
+#feedbox {
+  min-height: 300px;
+  margin-bottom: 10px;
+}
+
+#buttonNavbar {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#carousel{
+  height: 560px;
+}
+
+/* Clear floats after image containers */
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+/* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 500px) {
+  .column {
     width: 100%;
   }
-  
+}
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}

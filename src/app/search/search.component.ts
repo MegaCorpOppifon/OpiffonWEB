@@ -18,9 +18,18 @@ export class SearchComponent implements OnInit {
 
   ngOnInit() {
     this.http.getExperts().subscribe( data => {
-      this.experts = data; } );
+      this.experts = this.shortenDescription(data); } );
     this.http.getCategories().subscribe( data => {
       this.mainOptions = data; } );
+  }
+
+  shortenDescription(experts: User[]) {
+    experts.forEach(element => {
+      if (element.description.length > 50) {
+        element.description = element.description.slice(0, 100) + '...';
+      }
+    });
+    return experts;
   }
 
   goToExpertDetails(id) {

@@ -11,8 +11,8 @@
 
             <!--Card image-->
             <div class="view overlay">
-              <img class="card-img-top" src={{profiles[2]}} alt="Card image cap">
-              <a href="#!">
+              <img class="card-img-top" src={{expert.image}} alt="Card image cap">
+              <a href="/expert/{{expert.id}}">
                 <div class="mask rgba-white-slight"></div>
               </a>
             </div>
@@ -61,11 +61,11 @@
       <!--Appointment column-->
       <div class="col-3">
         <div class="list-group">
-          <a href="#" class="list-group-item active waves-effect disabled">
+          <a href="" class="list-group-item active waves-effect disabled">
             Appointments
           </a>
           <div *ngFor="let appointment of appointments">
-            <a href="#" class="list-group-item list-group-item-action waves-effect">
+            <a href="" class="list-group-item list-group-item-action waves-effect">
               {{appointment}}
             </a>
           </div>
@@ -76,11 +76,11 @@
       <!--Feed column-->
       <div class="col-6">
         <div class="list-group">
-          <a href="#" class="list-group-item active waves-effect disabled">
+          <a href="" class="list-group-item active waves-effect disabled">
             News feed
           </a>
           <div *ngFor="let appointment of appointments">
-            <a href="#" class="list-group-item list-group-item-action waves-effect">
+            <a href="" class="list-group-item list-group-item-action waves-effect">
               {{appointment}}
             </a>
           </div>
@@ -88,20 +88,20 @@
       </div>
       <!--/.Feed column-->
 
-      <!--Subscriber column-->
+      <!--Favorites column-->
       <div class="col-3">
         <div class="list-group">
-          <a href="#" class="list-group-item active waves-effect disabled">
+          <a href="" class="list-group-item active waves-effect disabled">
             Favorites
           </a>
-          <div *ngFor="let appointment of appointments">
-            <a href="#" class="list-group-item list-group-item-action waves-effect">
-              {{appointment}}
+          <div *ngFor="let favorite of favorites">
+            <a (click)=favoriteClick(favorite.id) class="list-group-item list-group-item-action waves-effect">
+              {{favorite.firstName}} {{favorite.lastName}}
             </a>
           </div>
         </div>
       </div>
-      <!--/.Subscriber column-->
+      <!--/.Favorites column-->
 
     </div>
   </div>

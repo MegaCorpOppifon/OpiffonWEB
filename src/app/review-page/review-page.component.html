@@ -1,51 +1,54 @@
 <ng-container *ngIf="expert$ | async as expert; else loading">
   <h1>Review af {{expert.firstName}} {{expert.lastName}}</h1>
 
+  <form [formGroup]="form">
+    <div class="col-6 form-horizontal">
+      <div class="form-group">
+        <input class="form-control" formControlName="title" placeholder="Title">
+        <div class="error" *ngIf="isFieldInvalid('title')">
+          Please enter a title
+        </div>
+      </div>
 
-  <div class="col-6 form-horizontal" [formGroup]="form">
-    <div class="form-group">
-      <input class="form-control" formControlName="title" placeholder="Title">
-      <div class="error" *ngIf="isFieldValid('title')">
-        Please enter a title
+      <div class="form-group">
+        <textarea class="form-control" formControlName="reviewText" rows="3" placeholder="Please write your review here"></textarea>
+        <div class="error" *ngIf="isFieldInvalid('reviewText')">
+          Please enter write review
+        </div>
+      </div>
+
+      <div class="form-group container">
+        <label for="rating">Rating <i class="grey-text mr-1"><i class="fa fa-lg fa-star"> </i></i></label>
+        <select name="rating" id="rating" class="form-control" formControlName="rating">
+          <option value="" disabled selected>Rate {{expert.firstName}}</option>
+          <option *ngFor="let option of ratings" [value]="option">{{ option }} </option>
+        </select>
+        <div class="error" *ngIf="isFieldInvalid('rating')">
+          Please give a rating
+        </div>
+      </div>
+
+
+      <div id="anon" class="form-group container row">
+        <span class="float-left row">Anonymous review?</span>
+      </div>
+      <div class="container">
+      <div>
+        <input type="radio" formControlName="anonymity" [value]=true>
+        <label>Yes</label>
+      </div>
+      <div>
+        <input type="radio" formControlName="anonymity" [value]=false checked>
+        <label>No</label>
       </div>
     </div>
 
-    <div class="form-group">
-      <textarea class="form-control" formControlName="reviewText" rows="3" placeholder="Please write your review here"></textarea>
-      <div class="error" *ngIf="isFieldValid('reviewText')">
-        Please enter write review
+      <div class="form-group container">
+        <button [disabled]="!form.valid" class=" row btn btn-primary" (click)="onSubmit()" type="submit">Submit</button>
       </div>
     </div>
+  </form>
 
-    <div class="form-group container">
-      <label for="rating">Rating <i class="grey-text mr-1"><i class="fa fa-lg fa-star"> </i></i></label>
-      <select name="rating" id="rating" class="form-control" formControlName="rating">
-        <option value="" disabled selected>Rate {{expert.firstName}}</option>
-        <option *ngFor="let option of ratings" [value]="option">{{ option }} </option>
-      </select>
-      <div class="error" *ngIf="isFieldValid('rating')">
-        Please give a rating
-      </div>
-    </div>
-  </div>
-
-  <div class="form-group container">
-    <span>Anonymous review?</span>
-    <div class="custom-control custom-radio">
-      <input [(ngModel)]="review.anonymity" type="radio" class="custom-control-input" [value]=true>
-      <label class="custom-control-label">Yes</label>
-    </div>
-
-    <div class="custom-control custom-radio">
-      <input [(ngModel)]="review.anonymity" type="radio" class="custom-control-input" [value]=false checked>
-      <label class="custom-control-label">No</label>
-    </div>
-
-
-    <div class="form-group container">
-      <button [disabled]="!form.valid" class=" row btn btn-primary" (click)="onSubmit()" type="submit">Submit</button>
-    </div>
-  </div>
 </ng-container>
 
 <ng-template #loading>Loading...</ng-template>

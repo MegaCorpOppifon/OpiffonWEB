@@ -14,36 +14,40 @@
 <div class="center">
   <h1>Experts</h1>
   <div class="container">
-    <div class="row">
-      <!-- Card deck -->
-      <div class="card-deck">
-          <!-- Card -->
-          <div *ngFor="let expert of experts" class="card mb-4">
+      <div class="row">
 
-            <!--Card image-->
-            <div class="view overlay">
-              <img class="card-img-top" src={{profiles[2]}} alt="Card image cap">
-              <a href="#!">
-                <div class="mask rgba-white-slight"></div>
-              </a>
-            </div>
+          <!-- Card deck -->
+          <div class="card-deck">
+              <!-- Card -->
+              <div *ngFor="let expert of experts" class="card mb-4">
 
-            <!--Card content-->
-            <div class="card-body elegant-color white-text rounded-bottom">
+                <!--Card image-->
+                <div class="view overlay">
+                  <img class="card-img-top" src={{expert.image}} alt="Card image cap">
+                  <a (click)=expertClick(expert.id)>
+                    <div class="mask rgba-white-slight"></div>
+                  </a>
+                </div>
 
-              <!--Name-->
-              <h4 class="card-title">{{expert.firstName}} {{expert.lastName}}</h4>
-              <!--Description-->
-              <p class="card-text white-text mb-4">{{expert.description}}</p>
-              <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
-              <a href="/expert/{{expert.id}}" mdbBtn color="primary" class="waves-light" mdbWavesEffect>Read more</a>
+                <!--Card content-->
+                <div class="card-body elegant-color white-text rounded-bottom">
 
-            </div>
+                  <!--Name-->
+                  <h4 class="card-title">{{expert.firstName}} {{expert.lastName}}</h4>
+                  <!--Description-->
+                  <p class="card-text white-text mb-4">{{expert.description}}</p>
+                  <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+                  <a (click)=expertClick(expert.id) mdbBtn color="primary" class="waves-light" mdbWavesEffect>Read more</a>
 
+                </div>
+
+              </div>
+              <!-- Card -->
           </div>
+          <!-- Card deck -->
+        </div>
           <!-- Card -->
-      <a href="/search" mdbBtn color="default" class="waves-light" mdbWavesEffect>Search expert</a>
+      <a (click)=searchClick() mdbBtn color="default" class="waves-light" mdbWavesEffect>Search expert</a>
     </div>
 
   </div>
-</div>

@@ -21,10 +21,10 @@ const routes: Routes = [
   { path: 'signup', component: SignUpComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'calendar', component: MyCalendarComponent, canActivate: [AuthGuard] },
-  { path: 'calendar/:id', component: ExpertCalendarComponent},
+  { path: 'calendar/:id', component: ExpertCalendarComponent, canActivate: [AuthGuard]},
   { path: 'search', component: SearchComponent },
   { path: 'expert/:id', component: ExpertProfileComponent},
-  { path: 'profile/:id', component: ProfileComponent},
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
   { path: 'review/:id', component: ReviewPageComponent, canActivate: [AuthGuard]},
   { path: '', redirectTo: '/login', pathMatch: 'full'},
   { path: '**', component: PageNotFoundComponent}

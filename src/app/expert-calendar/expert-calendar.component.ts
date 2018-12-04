@@ -1,4 +1,5 @@
 import { OnInit, Component, ChangeDetectionStrategy, ViewChild, TemplateRef} from '@angular/core';
+import { CalendarComponent } from '../calendar/calendar.component';
 import { DTOAppointment } from '../shared/models/appointment';
 import { startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMonth, addHours} from 'date-fns';
 import { Subject } from 'rxjs';

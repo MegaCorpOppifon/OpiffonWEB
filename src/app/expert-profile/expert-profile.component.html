@@ -1,140 +1,238 @@
-<ng-container *ngIf="expert$ | async as expert; else loading">
+<ng-container *ngIf="(expert$ | async) as expert; else: loading">
   <section class="my-5 fluid-container">
     <div class="card card-body">
       <!-- Card header -->
-      <div class="card-header border-0 font-weight-bold d-flex justify-content-between">
+      <div
+        class="card-header border-0 font-weight-bold d-flex justify-content-between"
+      >
         <div>
           <h5 class="font-weight-bold mt-0">
-            <span class="text-default" href="">{{expert.firstName}} {{expert.lastName}}</span>
+            <span class="text-default"
+              >{{ expert.firstName }} {{ expert.lastName }}</span
+            >
           </h5>
           <h6 class="mt-0">
-            <span class="text-default">{{expert.expertCategory}}</span>
+            <span class="text-default">{{ expert.expertCategory }}</span>
           </h6>
         </div>
         <div class="text-right">
           <ul class="list-unstyled list-inline mb-0">
-            <li class="list-inline-item"><a data-toggle="modal" data-target="#contactModalCenter" class="text-default mr-3"><i
-                  class="fa fa-envelope mr-1"></i>Contact</a></li>
-            <li class="list-inline-item"><a (click)="calendarClick()" class="text-default mr-3"><i class="fa fa-user mr-1"></i>See
-                Calendar
-              </a></li>
-            <li class="list-inline-item"><a href="" class="text-default mr-3"><i class="fa fa-star mr-1"></i>Favorite</a></li>
+            <li class="list-inline-item">
+              <a
+                data-toggle="modal"
+                data-target="#contactModalCenter"
+                class="text-default mr-3"
+                ><i class="fa fa-envelope mr-1"></i>Contact</a
+              >
+            </li>
+            <li class="list-inline-item">
+              <a (click)="calendarClick()" class="text-default mr-3"
+                ><i class="fa fa-user mr-1"></i>See Calendar
+              </a>
+            </li>
+            <li class="list-inline-item">
+              <a (click)="addFavorite()" class="text-default mr-3"
+                ><i class="fa fa-star mr-1"></i>Favorite</a
+              >
+            </li>
           </ul>
           <ul class="list-unstyled list-inline mb-2 pt-1">
             <li class="list-inline-item">
-              <a class="grey-text mr-1"><i class="fa fa-lg fa-facebook"> </i></a>
+              <a class="grey-text mr-1"
+                ><i class="fa fa-lg fa-facebook"> </i
+              ></a>
             </li>
             <li class="list-inline-item">
-              <a class="grey-text mr-1"><i class="fa fa-lg fa-linkedin"> </i></a>
+              <a class="grey-text mr-1"
+                ><i class="fa fa-lg fa-linkedin"> </i
+              ></a>
             </li>
             <li class="list-inline-item">
-              <a class="grey-text mr-1"><i class="fa fa-lg fa-instagram"> </i></a>
+              <a class="grey-text mr-1"
+                ><i class="fa fa-lg fa-instagram"> </i
+              ></a>
             </li>
           </ul>
         </div>
       </div>
 
       <div class="container media mt-4 px-1">
-        <img class="card-img-100 rounded-circle d-flex z-depth-1 mr-3" src="assets/img/Rasmus.jpg" alt="Generic placeholder image">
-        <p class="card-text">"{{expert.description}}"</p>
+        <img
+          class="card-img-100 rounded-circle d-flex z-depth-1 mr-3"
+          src="{{expert.image}}"
+          alt="Generic placeholder image"
+        />
+        <p class="card-text">"{{ expert.description }}"</p>
       </div>
 
       <br />
       <div class="row">
         <div class="container col-sm card">
-          <h5>
-            <span>Reviews</span>
-          </h5>
-          <ul *ngFor="let review of expert?.reviews" class="list-group list-group-flush">
+          <h5><span>Reviews</span></h5>
+          <ul
+            *ngFor="let review of expert?.reviews"
+            class="list-group list-group-flush"
+          >
             <div class="card">
               <!-- Card content -->
               <div class="card-body">
                 <!-- Title -->
-                <h4 class="card-title"><span>{{review.title}}</span></h4>
-                <!-- Text & rating-->
-                <p class="card-text">{{review.reviewText}} {{review.rating}}<i class="grey-text mr-1"><i class="fa fa-lg fa-star"></i></i></p>
+                <h4 class="card-title">
+                  <span>{{ review.title }}</span>
+                </h4>
+                <!-- Text & rating -->
+                <p class="card-text">
+                  {{ review.reviewText }} {{ review.rating }}
+                  <i class="grey-text mr-1"><i class="fa fa-lg fa-star"></i></i>
+                </p>
+              </div>
+              <div *ngIf="!review.anonymity">
+                <h6 class="card-title">
+                  <span>- {{ review.name }}</span>
+                </h6>
               </div>
             </div>
           </ul>
-          <button id="bookButton" (click)=reviewClick() mdbBtn type="button" color="success" class="waves-light"
-            mdbWavesEffect>Review
-            {{expert.firstName}}
+          <button
+            id="bookButton"
+            (click)="reviewClick()"
+            mdbBtn
+            type="button"
+            color="success"
+            class="waves-light"
+            mdbWavesEffect
+          >
+            Review {{ expert.firstName }}
           </button>
         </div>
         <div class="container col-sm">
           <!-- empty div to separat Reviews and Main fields -->
         </div>
         <div class="container col-sm card">
-          <h5>
-            <span>Main fields</span>
-          </h5>
+          <h5><span>Main fields</span></h5>
           <ul class="list-group" *ngFor="let main of expert.mainFields">
-            <li class="list-group-item">{{main}} <i class="fa fa-lg fa-heart"></i></li>
-
+            <li class="list-group-item">
+              {{ main }} <i class="fa fa-lg fa-heart"></i>
+            </li>
           </ul>
-          <button id="bookButton" (click)=calendarClick() mdbBtn type="button" color="success" class="waves-light"
-            mdbWavesEffect>Book
-            {{expert.firstName}}
+          <button
+            id="bookButton"
+            (click)="calendarClick()"
+            mdbBtn
+            type="button"
+            color="success"
+            class="waves-light"
+            mdbWavesEffect
+          >
+            Book {{ expert.firstName }}
           </button>
         </div>
       </div>
     </div>
   </section>
-  <!--Section: Author Box-->
+  <!-- Section: Author Box -->
   <!-- Modal -->
-  <div class="modal fade" id="contactModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-    aria-hidden="true">
-
-    <!-- Add .modal-dialog-centered to .modal-dialog to vertically center the modal -->
+  <div
+    class="modal fade"
+    id="contactModalCenter"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true"
+  >
+    <!--
+      Add .modal-dialog-centered to .modal-dialog to vertically center the modal
+    -->
     <div class="modal-dialog modal-dialog-centered" role="document">
-
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Contact infomation</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <h5 class="modal-title" id="exampleModalLongTitle">
+            Contact infomation
+          </h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-
-          <!--Buttons-->
+          <!-- Buttons -->
           <div class="row text-center">
             <div class="col-md-6">
               <i class="fa fa-user"></i>
-              <p>{{expert.firstName}} {{expert.lastName}}</p>
-              <p>{{expert.expertCategory}}</p>
+              <p>{{ expert.firstName }} {{ expert.lastName }}</p>
+              <p>{{ expert.expertCategory }}</p>
             </div>
 
             <div class="col-md-6">
               <i class="fa fa-home"></i>
-              <p>{{expert.city}}</p>
+              <p>{{ expert.city }}</p>
               <p></p>
             </div>
           </div>
           <div class="row text-center">
-
             <div class="col-md-6">
               <i class="fa fa-phone"></i>
-              <p>{{expert.phoneNumber}}</p>
+              <p>{{ expert.phoneNumber }}</p>
               <p></p>
             </div>
 
             <div class="col-md-6">
               <i class="fa fa-envelope"></i>
-              <p>{{expert.email}}</p>
+              <p>{{ expert.email }}</p>
               <p></p>
             </div>
           </div>
         </div>
 
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div
+    class="modal fade"
+    id="FavoriteModal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="FavoriteModal"
+    aria-hidden="true"
+  >
+    <!--
+      Add .modal-dialog-centered to .modal-dialog to vertically center the modal
+    -->
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="FavoriteTitle">
+            {{ expert.firstName }} has been added to your favorites
+          </h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">...</div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Close
+          </button>
         </div>
       </div>
     </div>
   </div>
 </ng-container>
 
-<ng-template #loading>
-  <mat-spinner></mat-spinner>
-</ng-template>
+<ng-template #loading> <mat-spinner></mat-spinner> </ng-template>
