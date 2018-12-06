@@ -19,7 +19,6 @@ import { FooterComponent } from './footer/footer.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { ExpertProfileComponent } from './expert-profile/expert-profile.component';
 import { SearchComponent } from './search/search.component';
-import { CalendarComponent } from './calendar/calendar.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -42,7 +41,6 @@ import { ProfileComponent } from './profile/profile.component';
     SignUpComponent,
     ExpertProfileComponent,
     SearchComponent,
-    CalendarComponent,
     PageNotFoundComponent,
     ForgotPasswordComponent,
     ReviewPageComponent,
