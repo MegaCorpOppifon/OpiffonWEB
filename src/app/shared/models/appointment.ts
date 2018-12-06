@@ -9,7 +9,7 @@ export class DTOAppointment{
         this.startTime = new Date();
         this.endTime = new Date();    
         this.name = "";
-        this.creatorId = "";
+        this.ownerId = "";
     }
     id: string;
     title: string;
@@ -19,7 +19,7 @@ export class DTOAppointment{
     startTime: Date;
     endTime: Date;
     name: string;
-    creatorId: string;
+    ownerId: string;
     // participants    
   }
 
@@ -32,7 +32,7 @@ export class DTOAppointment{
         this.startTime = "";
         this.endTime = "";    
         this.name = "";
-        this.creatorId = "";
+        this.ownerId = "";
     }
     id: string;
     title: string;
@@ -42,6 +42,6 @@ export class DTOAppointment{
     startTime: string;
     endTime: string;
     name: string;
-    creatorId: string;
+    ownerId: string;
     // participants    
   }

@@ -63,7 +63,7 @@ export class ExpertCalendarComponent implements OnInit {
       label: '<i class="fa fa-fw fa-times"></i>',
       onClick: ({ event }: { event: CalendarEvent }): void => {
         
-        if(event.meta.creatorId == this.user.id) {
+        if(event.meta.ownerId == this.user.id) {
           this.http.deleteAppointment(event.meta)
           .subscribe(() => {
             this.events = this.events.filter(iEvent => iEvent.meta.id !== event.meta.id);
@@ -198,11 +198,11 @@ export class ExpertCalendarComponent implements OnInit {
     myAppointment.startTime = this.appointment.startTime;
     myAppointment.endTime = this.appointment.endTime;
     myAppointment.name = this.user.firstName + " " + this.user.lastName;
-    myAppointment.creatorId = this.user.id;
+    myAppointment.ownerId = this.user.id;
 
     this.http.addAppointment(myAppointment)
     .subscribe(data => {
-      myAppointment.id = data;
+      myAppointment.id = data.id;
       this.pushToLocalEventList(myAppointment, true);
       this.addPaticipantToEvent(simpleExpert, myAppointment, this.expert.id);
       this.appointment = new DTOAppointment();

@@ -68,7 +68,7 @@ export class HttpService {
     myAppointment.startTime = appointment.startTime.toLocaleString();
     myAppointment.endTime = appointment.endTime.toLocaleString();
     myAppointment.name = appointment.name;
-    myAppointment.creatorId = appointment.creatorId;
+    myAppointment.ownerId = appointment.ownerId;
 
     const url = `${this.apiUrl}appointment`;
     return this.http.post(url, myAppointment);
