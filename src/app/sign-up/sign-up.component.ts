@@ -58,12 +58,11 @@ export class SignUpComponent implements OnInit {
       city: ['', Validators.required],
       phoneNumber: ['', Validators.required],
       birthday: ['', Validators.required],
-      category: [''],
       gender: ['male', Validators.required],
       interest: [''],
       interests: [[], Validators.required],
       expert: [false, Validators.required],
-      expertCategory: ['', Validators.required],
+      catagory: ['', Validators.required],
       mainField: [''],
       tags: [''],
       description: ['', Validators.required]
