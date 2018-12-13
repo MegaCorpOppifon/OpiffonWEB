@@ -73,7 +73,7 @@
 
           <div class="form-group">
             <input type="string" formControlName="interest" class="form-control" placeholder="Add your interests">
-            <div *ngIf="whoAreYouSubmit && interests.invalid" class="alert alert-danger">
+            <div *ngIf="whoAreYouSubmit && f.interests.invalid" class="alert alert-danger">
               At least one interest is required
             </div>
           </div>

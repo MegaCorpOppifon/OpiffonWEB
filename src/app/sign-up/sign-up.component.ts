@@ -61,6 +61,7 @@ export class SignUpComponent implements OnInit {
       category: [''],
       gender: ['male', Validators.required],
       interest: [''],
+      interests: [[], Validators.required],
       expert: [false, Validators.required],
       expertCategory: ['', Validators.required],
       mainField: [''],
@@ -76,21 +77,19 @@ export class SignUpComponent implements OnInit {
 
   public addInterest() {
     if (this.signUpForm.controls['interest'].value !== '') {
-      if (this.user.interestTags === undefined) {
-        this.user.interestTags = [];
-      }
-    
+      
       let interest = this.signUpForm.controls['interest'].value;
       this.interests.unshift(interest);   
-      
+      this.signUpForm.patchValue({interests: this.interests});
     }
-    this.interest = '';
+    this.signUpForm.patchValue({interest: ''});
   }
 
   public removeInterest(interestToRemove: string) {
     const interest = this.interests.find(x => x === interestToRemove);
-    const index = this.user.interestTags.indexOf(interest);
+    const index = this.interests.indexOf(interest);
     this.interests.splice(index, 1);
+    this.signUpForm.patchValue({interests: this.interests});
   }
 
   // public addTag() {
