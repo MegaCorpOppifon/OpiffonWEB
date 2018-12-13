@@ -17,20 +17,30 @@ export class SignUpComponent implements OnInit {
   passwordPattern = '^(?=.*d)(?=.*[a-z])(?=.*[A-Z])(?!.*s).{6,12}$';
   mobileNumberPattern = '^((\\+91-?)|0)?[0-9]{10}$';
   emailPattern = '^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$';
-  catagories: string[];
+  
+  // User
   interest: string;
-  subCatagory: string;
+  interests: string[];
+
+  // Expert
+  catagory: string;
   mainField: string;
-  category: string;
+  tag: string;
+  mainFields: string[];
+  tags: string[];
 
+  catagories: string[];
   user: User;
+  signUpForm: FormGroup;
 
-  constructor(
-    private router: Router,
-    private authenticationService: AuthorizationService, private http: HttpService
-  ) {
+  constructor( 
+    private router: Router, 
+    private authenticationService: AuthorizationService, 
+    private http: HttpService,
+    public fb: FormBuilder ) {
     this.user = new User();
-    this.user.isExpert = false;
+    this.interests = [];
+    this.createWhoAreYouForm(fb)
   }
 
   ngOnInit() {
@@ -38,69 +48,97 @@ export class SignUpComponent implements OnInit {
       this.catagories = data; });
   }
 
+  private createWhoAreYouForm(fb: FormBuilder){
+    this.signUpForm = fb.group({
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(8)]],
+      confirmPassword: ['', [Validators.required]],
+      city: ['', Validators.required],
+      phoneNumber: ['', Validators.required],
+      birthday: ['', Validators.required],
+      category: [''],
+      gender: ['male', Validators.required],
+      interest: [''],
+      expert: [false, Validators.required],
+      expertCategory: ['', Validators.required],
+      mainField: [''],
+      tags: [''],
+      description: ['', Validators.required]
+    }, {
+        validator: PasswordValidation.MatchPassword
+    });
+  }
+
+  get f() { return this.signUpForm.controls; }
+
 
   public addInterest() {
-    if (this.interest !== '') {
+    if (this.signUpForm.controls['interest'].value !== '') {
       if (this.user.interestTags === undefined) {
         this.user.interestTags = [];
       }
-    this.user.interestTags.push(this.interest);
+    
+      let interest = this.signUpForm.controls['interest'].value;
+      this.interests.unshift(interest);   
+      
     }
     this.interest = '';
   }
 
   public removeInterest(interestToRemove: string) {
-    const interest = this.user.interestTags.find(x => x === interestToRemove);
+    const interest = this.interests.find(x => x === interestToRemove);
     const index = this.user.interestTags.indexOf(interest);
-    this.user.interestTags.splice(index, 1);
+    this.interests.splice(index, 1);
   }
 
-  public addCategory() {
-    if (this.category !== '') {
-      if (this.user.expertTags === undefined) {
-        this.user.expertTags = [];
-      }
-      this.user.expertTags.push(this.subCatagory);
-    }
-    this.subCatagory = '';
-  }
+  // public addTag() {
+  //   if (this.tag !== '') {
+  //     if (this.user.expertTags === undefined) {
+  //       this.user.expertTags = [];
+  //     }
+  //     this.user.expertTags.push(this.tag);
+  //   }
+  //   this.tag = '';
+  // }
 
-  public removeCategory(categoryToRemove: string) {
-    const category = this.user.expertTags.find(x => x === categoryToRemove);
-    const index = this.user.expertTags.indexOf(category);
-    this.user.expertTags.splice(index, 1);
-  }
+  // public removeTag(tagToRemove: string) {
+  //   const tag = this.user.expertTags.find(x => x === tagToRemove);
+  //   const index = this.user.expertTags.indexOf(tag);
+  //   this.user.expertTags.splice(index, 1);
+  // }
 
-  public addMainField() {
-    if (this.mainField !== '') {
-      if (this.user.mainFields === undefined) {
-        this.user.mainFields = [];
-      }
-    this.user.mainFields.push(this.mainField);
-    }
-    this.mainField = '';
-  }
+  // public addMainField() {
+  //   if (this.mainField !== '') {
+  //     if (this.user.mainFields === undefined) {
+  //       this.user.mainFields = [];
+  //     }
+  //   this.user.mainFields.push(this.mainField);
+  //   }
+  //   this.mainField = '';
+  // }
 
-  public removeMainField(mainFieldToRemove: string) {
-    const mainField = this.user.mainFields.find(x => x === mainFieldToRemove);
-    const index = this.user.mainFields.indexOf(mainField);
-    this.user.mainFields.splice(index, 1);
-  }
+  // public removeMainField(mainFieldToRemove: string) {
+  //   const mainField = this.user.mainFields.find(x => x === mainFieldToRemove);
+  //   const index = this.user.mainFields.indexOf(mainField);
+  //   this.user.mainFields.splice(index, 1);
+  // }
 
   public onSubmit() {
     this.whoAreYouSubmit = true;
 
-    if (this.user.password === this.user.confirmPassword) {
-      this.authenticationService.register(this.user).subscribe( data =>
-        this.authenticationService.login(this.user.email, this.user.password, result => {
-          if (result) {
-            console.log('Logged in ' + result);
-            this.router.navigate(['/home']);
-          } else {
-            console.log('not a valid user');
-          }
-        }));
-    }
+    // if (this.user.password === this.user.confirmPassword) {
+    //   this.authenticationService.register(this.user).subscribe( data =>
+    //     this.authenticationService.login(this.user.email, this.user.password, result => {
+    //       if (result) {
+    //         console.log('Logged in ' + result);
+    //         this.router.navigate(['/home']);
+    //       } else {
+    //         console.log('not a valid user');
+    //       }
+    //     }));
+    // }
 
     console.log(this.user);
   }
