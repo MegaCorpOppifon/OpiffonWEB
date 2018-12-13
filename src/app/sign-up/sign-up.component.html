@@ -120,12 +120,15 @@
               </div>
             </div>
 
-           <!--  <div class="form-group">
-              <input [(ngModel)]="mainField" type="string" class="form-control" name="expertMainField" placeholder="Add a main field">
+             <div class="form-group">
+              <input type="string" class="form-control" formControlName="mainField" placeholder="Add a main field">
+              <div *ngIf="whoAreYouSubmit && f.mainFields.invalid" class="alert alert-danger">
+                  At least one main field is required
+                </div>
             </div>
 
             <div class="form-group">
-              <span *ngFor="let mainfield of user.mainFields" class="badge badge-info">
+              <span *ngFor="let mainfield of mainFields" class="badge badge-info">
                 {{mainfield}}
                 <button type="button" class="btn btn-danger btn-sm" (click)="removeMainField(mainfield)">X</button>
               </span>
@@ -136,24 +139,29 @@
             </div>
 
             <div class="form-group">
-              <input [(ngModel)]="subCatagory" type="string" class="form-control" name="expertSubCategory" placeholder="Sub category">
-            </div>
-
-            <div class="form-group">
-              <span *ngFor="let catagory of user.expertTags" class="badge badge-info">
-                {{category}}
-                <button type="button" class="btn btn-danger btn-sm" (click)="removeCategory(category)">X</button>
-              </span>
-
-              <div class="d-flex flex-row-reverse">
-                <button class="btn btn-success" type="button" (click)="addCategory()">Add sub category</button>
+              <input type="string" class="form-control" formControlName="tag" placeholder="Tag">
+              <div *ngIf="whoAreYouSubmit && f.tags.invalid" class="alert alert-danger">
+                  At least one tag is required
               </div>
             </div>
 
             <div class="form-group">
-              <textarea [(ngModel)]="user.description" type="string" class="form-control" name="description"
-                placeholder="Type a description about your self"></textarea>
-            </div> -->
+              <span *ngFor="let tag of tags" class="badge badge-info">
+                {{tag}}
+                <button type="button" class="btn btn-danger btn-sm" (click)="removeTag(tag)">X</button>
+              </span>
+
+              <div class="d-flex flex-row-reverse">
+                <button class="btn btn-success" type="button" (click)="addTag()">Add tag</button>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <textarea type="string" class="form-control" formControlName="description" placeholder="Type a description about your self"></textarea>
+              <div *ngIf="whoAreYouSubmit && f.description.invalid" class="alert alert-danger">
+                  You must write a description.
+              </div>
+            </div> 
           </div> 
           <div class="form-group">
             <div class="d-flex flex-row-reverse">

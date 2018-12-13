@@ -40,12 +40,34 @@ export class SignUpComponent implements OnInit {
     public fb: FormBuilder ) {
     this.user = new User();
     this.interests = [];
+    this.mainFields = [];
+    this.tags = [];
     this.createWhoAreYouForm(fb)
   }
 
   ngOnInit() {
     this.http.getCategories().subscribe( data => {
       this.catagories = data; });
+
+      this.signUpForm.get('expert')
+        .valueChanges
+        .subscribe((value: boolean) => {
+          if(value){
+            this.signUpForm.get('catagory').setValidators(Validators.required);
+
+            this.signUpForm.get('mainFields').setValidators(Validators.required);
+            this.signUpForm.patchValue({'mainFields': [ ]});
+
+            this.signUpForm.get('tags').setValidators(Validators.required);
+            this.signUpForm.patchValue({'tags': [ ]});
+            this.signUpForm.get('description').setValidators(Validators.required);
+          } else {
+            this.signUpForm.get('catagory').clearValidators();
+            this.signUpForm.get('mainFields').clearValidators();
+            this.signUpForm.get('tags').clearValidators();
+            this.signUpForm.get('description').clearValidators();
+          }
+        })
   }
 
   private createWhoAreYouForm(fb: FormBuilder){
@@ -62,10 +84,12 @@ export class SignUpComponent implements OnInit {
       interest: [''],
       interests: [[], Validators.required],
       expert: [false, Validators.required],
-      catagory: ['', Validators.required],
+      catagory: [''],
       mainField: [''],
-      tags: [''],
-      description: ['', Validators.required]
+      mainFields: [[]],
+      tag: [''],
+      tags: [[]],
+      description: ['']
     }, {
         validator: PasswordValidation.MatchPassword
     });
@@ -77,7 +101,7 @@ export class SignUpComponent implements OnInit {
   public addInterest() {
     if (this.signUpForm.controls['interest'].value !== '') {
       
-      let interest = this.signUpForm.controls['interest'].value;
+      const interest = this.signUpForm.controls['interest'].value;
       this.interests.unshift(interest);   
       this.signUpForm.patchValue({interests: this.interests});
     }
@@ -91,54 +115,83 @@ export class SignUpComponent implements OnInit {
     this.signUpForm.patchValue({interests: this.interests});
   }
 
-  // public addTag() {
-  //   if (this.tag !== '') {
-  //     if (this.user.expertTags === undefined) {
-  //       this.user.expertTags = [];
-  //     }
-  //     this.user.expertTags.push(this.tag);
-  //   }
-  //   this.tag = '';
-  // }
+  public addMainField() {
+    if (this.signUpForm.controls['mainField'].value !== '') {
+      
+      const mainField = this.signUpForm.controls['mainField'].value;
+      this.mainFields.unshift(mainField);   
+      this.signUpForm.patchValue({mainFields: this.mainFields});
+    }
+    this.signUpForm.patchValue({mainField: ''});
+  }
 
-  // public removeTag(tagToRemove: string) {
-  //   const tag = this.user.expertTags.find(x => x === tagToRemove);
-  //   const index = this.user.expertTags.indexOf(tag);
-  //   this.user.expertTags.splice(index, 1);
-  // }
+  public removeMainField(mainFieldToRemove: string) {
+    const mainField = this.mainFields.find(x => x === mainFieldToRemove);
+    const index = this.mainFields.indexOf(mainField);
+    this.mainFields.splice(index, 1);
+    this.signUpForm.patchValue({mainFields: this.mainFields});
+  }
 
-  // public addMainField() {
-  //   if (this.mainField !== '') {
-  //     if (this.user.mainFields === undefined) {
-  //       this.user.mainFields = [];
-  //     }
-  //   this.user.mainFields.push(this.mainField);
-  //   }
-  //   this.mainField = '';
-  // }
+  public addTag() {
+    if (this.signUpForm.controls['tag'].value !== '') {
+      
+      const tag = this.signUpForm.controls['tag'].value;
+      this.tags.unshift(tag);   
+      this.signUpForm.patchValue({tags: this.tags});
+    }
+    this.signUpForm.patchValue({tag: ''});
+  }
 
-  // public removeMainField(mainFieldToRemove: string) {
-  //   const mainField = this.user.mainFields.find(x => x === mainFieldToRemove);
-  //   const index = this.user.mainFields.indexOf(mainField);
-  //   this.user.mainFields.splice(index, 1);
-  // }
+  public removeTag(tagToRemove: string) {
+    const tag = this.tags.find(x => x === tagToRemove);
+    const index = this.tags.indexOf(tag);
+    this.tags.splice(index, 1);
+    this.signUpForm.patchValue({tags: this.tags});
+  }
+
+  public copyInput() : boolean {
+    if(this.signUpForm.valid){
+      this.user.firstName = this.signUpForm.controls['firstName'].value;
+      this.user.lastName = this.signUpForm.controls['lastName'].value;
+      this.user.email = this.signUpForm.controls['email'].value;
+      this.user.password = this.signUpForm.controls['password'].value;
+      this.user.city = this.signUpForm.controls['city'].value;
+      this.user.phoneNumber = this.signUpForm.controls['phoneNumber'].value;
+      this.user.birthday = this.signUpForm.controls['birthday'].value;
+      this.user.gender = this.signUpForm.controls['gender'].value;
+      this.user.interestTags = this.signUpForm.controls['interests'].value;
+      this.user.isExpert = this.signUpForm.controls['expert'].value;
+      this.user.expertCategory = this.signUpForm.controls['catagory'].value;
+      this.user.mainFields = this.signUpForm.controls['mainFields'].value;
+      this.user.expertTags = this.signUpForm.controls['tags'].value;
+      this.user.description = this.signUpForm.controls['description'].value;
+
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  public registerAndLogin(){
+    this.authenticationService.register(this.user).subscribe( data =>
+      this.authenticationService.login(this.user.email, this.user.password, result => {
+        if (result) {
+          console.log('Logged in ' + result);
+          this.router.navigate(['/home']);
+        } else {
+          console.log('not a valid user');
+        }
+      }));
+  }
+
+  
 
   public onSubmit() {
     this.whoAreYouSubmit = true;
-
-    // if (this.user.password === this.user.confirmPassword) {
-    //   this.authenticationService.register(this.user).subscribe( data =>
-    //     this.authenticationService.login(this.user.email, this.user.password, result => {
-    //       if (result) {
-    //         console.log('Logged in ' + result);
-    //         this.router.navigate(['/home']);
-    //       } else {
-    //         console.log('not a valid user');
-    //       }
-    //     }));
-    // }
+    if(this.copyInput()){
+      this.registerAndLogin();
+    }
 
     console.log(this.user);
   }
-
 }
