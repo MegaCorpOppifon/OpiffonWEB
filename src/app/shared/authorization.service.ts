@@ -6,11 +6,20 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class AuthorizationService {
-  constructor(private http: HttpClient, private router: Router) { }
 
-  apiUrl = 'http://localhost:51071/api/';
+  apiUrl: string;
   private localStorage = 'megacorpworkout';
 
+  constructor(private http: HttpClient, private router: Router) { 
+    if(process.env.SERVER_ENV === 'staging'){
+      this.apiUrl = 'https://oppifonwebtest.azurewebsites.net'
+    } else if(process.env.SERVER_ENV === 'production'){
+      this.apiUrl = 'https://oppifonweb.azurewebsites.net'
+    } else {
+      this.apiUrl = 'http://localhost:51071/api/';
+    }  
+  }
+  
   register(user: User) {
     const url = `${this.apiUrl}account/register`;
     return this.http.post<any>(url, user);
