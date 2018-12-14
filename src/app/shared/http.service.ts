@@ -11,9 +11,18 @@ import { SimpleUser } from './models/simpleUser';
 
 export class HttpService {
 
-  constructor(private http: HttpClient, private router: Router, private auth: AuthorizationService) {}
+  apiUrl: string;
 
-  apiUrl = 'http://localhost:51071/api/';
+  constructor(private http: HttpClient, private router: Router, private auth: AuthorizationService) {
+    if(process.env.SERVER_ENV === 'staging'){
+      this.apiUrl = 'https://oppifonwebtest.azurewebsites.net'
+    } else if(process.env.SERVER_ENV === 'production'){
+      this.apiUrl = 'https://oppifonweb.azurewebsites.net'
+    } else {
+      this.apiUrl = 'http://localhost:51071/api/';
+    }  
+    
+  } 
 
   getExperts(): Observable<User[]> {
     const url = `${this.apiUrl}Expert`;
