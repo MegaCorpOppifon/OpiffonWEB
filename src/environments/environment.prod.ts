@@ -1,3 +1,5 @@
 export const environment = {
-  production: true
+  envName: 'prod',
+  production: true,
+  apiUrl: 'https://oppifonapi.azurewebsites.net'
 };
