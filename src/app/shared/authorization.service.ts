@@ -3,6 +3,7 @@ import { User, SimpleUser } from './models/Models';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class AuthorizationService {
@@ -11,12 +12,12 @@ export class AuthorizationService {
   private localStorage = 'megacorpworkout';
 
   constructor(private http: HttpClient, private router: Router) { 
-    if(process.env.SERVER_ENV === 'staging'){
-      this.apiUrl = 'https://oppifonwebtest.azurewebsites.net'
-    } else if(process.env.SERVER_ENV === 'production'){
-      this.apiUrl = 'https://oppifonweb.azurewebsites.net'
+    if(environment.envName === 'stag'){
+      this.apiUrl = environment.apiUrl;
+    } else if(environment.envName === 'prod'){
+      this.apiUrl = environment.apiUrl;
     } else {
-      this.apiUrl = 'http://localhost:51071/api/';
+      this.apiUrl = environment.apiUrl;
     }  
   }
   

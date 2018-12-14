@@ -16,7 +16,7 @@ export class HeaderComponent implements OnInit  {
   submitted = false;
   returnUrl: string;
   isLoggedIn = false;
-
+  
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,

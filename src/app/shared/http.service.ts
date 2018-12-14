@@ -7,6 +7,7 @@ import { Appointment, DTOAppointment } from './models/appointment';
 import { Calendar } from './models/calendar';
 import { AuthorizationService } from './authorization.service';
 import { SimpleUser } from './models/simpleUser';
+import { environment } from '../../environments/environment';
 @Injectable()
 
 export class HttpService {
@@ -14,12 +15,12 @@ export class HttpService {
   apiUrl: string;
 
   constructor(private http: HttpClient, private router: Router, private auth: AuthorizationService) {
-    if(process.env.SERVER_ENV === 'staging'){
-      this.apiUrl = 'https://oppifonwebtest.azurewebsites.net'
-    } else if(process.env.SERVER_ENV === 'production'){
-      this.apiUrl = 'https://oppifonweb.azurewebsites.net'
+    if(environment.envName === 'stag'){
+      this.apiUrl = environment.apiUrl;
+    } else if(environment.envName === 'prod'){
+      this.apiUrl = environment.apiUrl;
     } else {
-      this.apiUrl = 'http://localhost:51071/api/';
+      this.apiUrl = environment.apiUrl;
     }  
     
   } 
