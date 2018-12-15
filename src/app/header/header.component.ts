@@ -3,6 +3,7 @@ import { Component, OnInit, ViewChild, AfterViewInit  } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalDirective } from 'angular-bootstrap-md';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-header',
@@ -16,6 +17,7 @@ export class HeaderComponent implements OnInit  {
   submitted = false;
   returnUrl: string;
   isLoggedIn = false;
+  logo: string
   
   constructor(
     private formBuilder: FormBuilder,
@@ -26,6 +28,7 @@ export class HeaderComponent implements OnInit  {
 
 
   ngOnInit() {
+    this.logo = environment.apiUrl + '/Logo.jpg';
     this.loginForm = this.formBuilder.group({
       email: ['', Validators.required],
       password: ['', Validators.required]

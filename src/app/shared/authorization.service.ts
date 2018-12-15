@@ -12,13 +12,7 @@ export class AuthorizationService {
   private localStorage = 'megacorpworkout';
 
   constructor(private http: HttpClient, private router: Router) { 
-    if(environment.envName === 'stag'){
-      this.apiUrl = environment.apiUrl;
-    } else if(environment.envName === 'prod'){
-      this.apiUrl = environment.apiUrl;
-    } else {
-      this.apiUrl = environment.apiUrl;
-    }  
+      this.apiUrl = environment.apiUrl + 'api/';
   }
   
   register(user: User) {

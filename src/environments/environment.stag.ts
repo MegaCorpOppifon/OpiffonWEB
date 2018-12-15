@@ -1,6 +1,6 @@
 export const environment = {
     envName: 'stag',
     production: false,
-    apiUrl: 'https://oppifonapitest.azurewebsites.net/api/'
+    apiUrl: 'https://oppifonapitest.azurewebsites.net/'
   };
   
