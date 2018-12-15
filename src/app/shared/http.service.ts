@@ -15,14 +15,7 @@ export class HttpService {
   apiUrl: string;
 
   constructor(private http: HttpClient, private router: Router, private auth: AuthorizationService) {
-    if(environment.envName === 'stag'){
-      this.apiUrl = environment.apiUrl;
-    } else if(environment.envName === 'prod'){
-      this.apiUrl = environment.apiUrl;
-    } else {
-      this.apiUrl = environment.apiUrl;
-    }  
-    
+      this.apiUrl = environment.apiUrl + 'api/';    
   } 
 
   getExperts(): Observable<User[]> {
