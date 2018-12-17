@@ -18,7 +18,7 @@ export class HeaderComponent implements OnInit  {
   returnUrl: string;
   isLoggedIn = false;
   logo: string
-  
+
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
@@ -70,5 +70,31 @@ export class HeaderComponent implements OnInit  {
       this.authenticationService.logout();
       this.isLoggedIn = this.authenticationService.isLoggedIn();
       this.router.navigate(['/login']);
+    }
+
+    homeRouting() {
+      this.router.navigate(['/home']);
+    }
+
+    profileRouting() {
+      this.router.navigate(['/profile']);
+    }
+
+    calendarRouting() {
+      this.router.navigate([
+        '/calendar/' + this.authenticationService.currentUser().id
+      ]);
+    }
+
+    signupRouting() {
+      this.router.navigate([
+        '/signup'
+      ]);
+    }
+
+    forgotPasswordRouting() {
+      this.router.navigate([
+        '/forgot-password'
+      ]);
     }
 }
