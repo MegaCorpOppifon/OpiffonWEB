@@ -13,21 +13,12 @@ import { SimpleUser } from '../shared/models/simpleUser';
 export class HomeComponent implements OnInit {
   public user: User;
   public experts: User[];
-  public appointments = [
-    '21-01-2019, Kl. 13:00, Thomas Jensen',
-    '27-01-2019, Kl. 10:30, Frisør Træholt',
-    '02-02-2019, Kl. 12:00, John Andersen'
-  ];
   public profiles = [
     'assets/img/Dan.jpg',
     'assets/img/Henrik.jpg',
     'assets/img/Rasmus.jpg'
   ];
-  public newsfeed = [
-    'Thomas Jensen: Jeg har fået ledige pladser om torsdagen.',
-    'Frisør Træholt: I denne uge har vi tilbud på alle Tresommé produkter.',
-    'John Andersen: Jeg har skiftet nummer og kan nu kontaktes på tlf: 32658794.'
-  ];
+  public appointments = ['appointment 1', 'appointment 2', 'appointment 3'];
   public favorites: SimpleUser[];
 
   constructor(
@@ -78,7 +69,7 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  expertRouting(id: string) {
+  favoriteClick(id: string) {
     if (true) {
       this.router.navigate(['/expert', id]);
     }

@@ -1,161 +1,108 @@
-<!-- Navbar -->
+<!--Navbar-->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
   <!-- Navbar brand -->
   <div class="navbar-brand">
-    <a id="logo" class="navbar-item" (click)="homeRouting()">
-      <img src="{{logo}}" width="200" height="100" />
+    <a id="logo" class="navbar-item" href="/home">
+      <img src={{logo}} width="200" height="100">
     </a>
   </div>
 
   <!-- Collapse button -->
-  <button
-    class="navbar-toggler"
-    type="button"
-    data-toggle="collapse"
-    data-target="#basicExampleNav"
-    aria-controls="basicExampleNav"
-    aria-expanded="false"
-    aria-label="Toggle navigation"
-  >
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav" aria-controls="basicExampleNav"
+    aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
   <!-- Collapsible content -->
   <div class="collapse navbar-collapse" id="basicExampleNav">
+
     <!-- Links -->
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" (click)="homeRouting()"
-          >Home <span class="sr-only">(current)</span>
+        <a class="nav-link" href="/home">Home
+          <span class="sr-only">(current)</span>
         </a>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" (click)="profileRouting()">Change Profile Picture</a>
+        <a class="nav-link" href="/profile">Change Profile Picture</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" (click)="calendarRouting()">My calendar</a>
+        <a class="nav-link" href="/calendar">My calendar</a>
       </li>
-      <div *ngIf="!isLoggedIn">
+      <div *ngIf=!isLoggedIn>
         <li class="nav-item active">
-          <div class="container">
-            <button
-              data-toggle="modal"
-              data-target="#loginModalCenter"
-              mdbBtn
-              color="success"
-              class="waves-light"
-              mdbWavesEffect
-            >
-              Login
-            </button>
-          </div>
+            <div class="container">
+              <button data-toggle="modal" data-target="#loginModalCenter" mdbBtn color="success" class="waves-light"
+                mdbWavesEffect>Login</button>
+            </div>
         </li>
       </div>
-      <div *ngIf="isLoggedIn">
-        <li class="nav-item active">
-          <div class="container">
-            <button
-              (click)="logout()"
-              mdbBtn
-              color="success"
-              class="waves-light"
-              mdbWavesEffect
-            >
-              Log out
-            </button>
-          </div>
-        </li>
-      </div>
+      <div *ngIf=isLoggedIn>
+          <li class="nav-item active">
+              <div class="container">
+                <button (click)="logout()" mdbBtn color="success" class="waves-light"
+                  mdbWavesEffect>Log out</button>
+              </div>
+          </li>
+        </div>
     </ul>
   </div>
   <!-- Collapsible content -->
+
 </nav>
-<!-- /.Navbar -->
+<!--/.Navbar-->
 
 <!-- loginModal -->
-<div
-  class="modal fade"
-  id="loginModalCenter"
-  #loginModalCenter
-  tabindex="-1"
-  role="form"
-  aria-labelledby="ModalCenterTitle"
-  aria-hidden="true"
->
-  <!--
-    Add .modal-dialog-centered to .modal-dialog to vertically center the modal
-  -->
+<div class="modal fade" id="loginModalCenter" #loginModalCenter tabindex="-1" role="form"
+  aria-labelledby="ModalCenterTitle" aria-hidden="true">
+
+  <!-- Add .modal-dialog-centered to .modal-dialog to vertically center the modal -->
   <div class="modal-dialog modal-dialog-centered" role="document">
+
     <div class="modal-content" *ngIf="!isLoggedIn">
       <!-- Default form login -->
-      <form
-        class="text-center border border-light p-5"
-        (ngSubmit)="onSubmit(f)"
-        [formGroup]="loginForm"
-      >
+      <form class="text-center border border-light p-5" (ngSubmit)="onSubmit(f)" [formGroup]="loginForm">
+
         <!-- Email -->
-        <input
-          formControlName="email"
-          type="email"
-          id="loginFormEmail"
-          class="form-control mb-4"
-          placeholder="E-mail"
-        />
+        <input formControlName="email" type="email" id="loginFormEmail" class="form-control mb-4" placeholder="E-mail">
 
         <!-- Password -->
-        <input
-          formControlName="password"
-          type="password"
-          id="loginFormPassword"
-          class="form-control mb-4"
-          placeholder="Password"
-        />
+        <input formControlName="password" type="password" id="loginFormPassword" class="form-control mb-4" placeholder="Password">
 
         <div class="d-flex justify-content-around">
           <div>
             <!-- Remember me -->
             <div class="custom-control custom-checkbox">
-              <input
-                type="checkbox"
-                class="custom-control-input"
-                id="loginFormRemember"
-              />
-              <label class="custom-control-label" for="loginFormRemember"
-                >Remember me</label
-              >
+              <input type="checkbox" class="custom-control-input" id="loginFormRemember">
+              <label class="custom-control-label" for="loginFormRemember">Remember me</label>
             </div>
           </div>
           <div>
             <!-- Forgot password -->
-            <a (click)="forgotPasswordRouting()">Forgot password?</a>
+            <a href="/forgot-password">Forgot password?</a>
           </div>
         </div>
 
         <!-- Sign in button -->
-        <button class="btn btn-success btn-block my-4" type="submit">
-          Login
-        </button>
+        <button class="btn btn-success btn-block my-4" type="submit">Login</button>
 
         <!-- Register -->
-        <p>Not a member? <a (click)="signupRouting()">Register</a></p>
+        <p>Not a member?
+          <a href="/signup">Register</a>
+        </p>
       </form>
       <!-- form login -->
+
     </div>
     <div class="modal-content" *ngIf="isLoggedIn">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">
-          You are now logged in
-        </h4>
-        <button
-          type="button"
-          class="close"
-          data-dismiss="modal"
-          aria-label="Close"
-        >
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
+        <div class="modal-header text-center">
+            <h4 class="modal-title w-100 font-weight-bold">You are now logged in</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
     </div>
   </div>
 </div>

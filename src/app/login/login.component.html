@@ -1,112 +1,53 @@
 <div class="container">
-  <h1>{{ title }}</h1>
-  <div class="mtm pbm">
-    <div class="_6a _6b mrl">
-      <img
-        class="img"
-        src="https://scontent-arn2-1.xx.fbcdn.net/v/t39.2365-6/32158113_191365994837162_5605369115159035904_n.png?_nc_cat=1&amp;_nc_ht=scontent-arn2-1.xx&amp;oh=e4a666a89aecd35268e5e9cf4bfbd567&amp;oe=5CAF16B5"
-        alt=""
-        style="vertical-align: middle"
-      />
-    </div>
-    <div class="_6a _6b product_desc">
-      <span class="mtl _3ma _6p _6s _6v"
-        >Share your knowledge </span
-      ><span class="mlm _6q _6t _mf">
-        and connect with your clients.
-      </span>
-    </div>
-  </div>
-  <div class="mtm pbm">
-    <div class="_6a _6b mrl">
-      <img
-        class="img"
-        src="https://scontent-arn2-1.xx.fbcdn.net/v/t39.2365-6/32220240_200651090730619_3989834943638274048_n.png?_nc_cat=1&amp;_nc_ht=scontent-arn2-1.xx&amp;oh=d17bf4cc07a8f8e27df9cac249c908d6&amp;oe=5C9F7936"
-        alt=""
-        style="vertical-align: middle"
-      />
-    </div>
-    <div class="_6a _6b product_desc">
-      <span class="mtl _3ma _6p _6s _6v"> Find the person you are looking for! </span>
-    </div>
-  </div>
-  <div class="mtm pbm">
-    <div class="_6a _6b mrl">
-      <img
-        class="img"
-        src="https://scontent-arn2-1.xx.fbcdn.net/v/t39.2365-6/32213527_1720875981299142_7601737152052854784_n.png?_nc_cat=1&amp;_nc_ht=scontent-arn2-1.xx&amp;oh=2455c1cf10374466d39f502a7b67197a&amp;oe=5CA00DE8"
-        alt=""
-        style="vertical-align: middle"
-      />
-    </div>
-    <div class="_6a _6b product_desc">
-      <span class="mtl _3ma _6p _6s _6v"> Organize  </span
-      ><span class="mlm _6q _6t _mf"> your plans! </span>
-    </div>
-  </div>
-  <a
-    (click)="signupClick()"
-    mdbBtn
-    color="success"
-    class="waves-light"
-    mdbWavesEffect
-    >Sign up</a
-  >
+  <h1>{{title}}</h1>
+  <p>
+    Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aliquam in lorem sit amet leo accumsan lacinia. Aenean placerat.
+    Integer malesuada. Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur,
+    vel illum qui dolorem eum fugiat quo voluptas nulla pariatur? Maecenas ipsum velit, consectetuer eu lobortis ut, dictum
+    at dui. Etiam dui sem, fermentum vitae, sagittis id, malesuada in, quam. Morbi leo mi, nonummy eget tristique non, rhoncus
+    non leo. Phasellus enim erat, vestibulum vel, aliquam a, posuere eu, velit. Donec ipsum massa, ullamcorper in, auctor
+    et, scelerisque sed, est. Praesent vitae arcu tempor neque lacinia pretium. Praesent dapibus. Aliquam erat volutpat.
+  </p>
+  <a (click)="signupClick()" mdbBtn color="success" class="waves-light" mdbWavesEffect>Sign up</a>
 </div>
 
 <div class="center">
   <h1>Experts</h1>
   <div class="container">
-    <div class="row">
-      <!-- Card deck -->
-      <div class="card-deck">
-        <!-- Card -->
-        <div *ngFor="let expert of experts" class="card mb-4">
-          <!-- Card image -->
-          <div class="view overlay">
-            <img
-              class="card-img-top"
-              src="{{expert.image}}"
-              alt="Card image cap"
-            />
-            <a (click)="expertClick(expert.id)">
-              <div class="mask rgba-white-slight"></div>
-            </a>
-          </div>
+      <div class="row">
 
-          <!-- Card content -->
-          <div class="card-body elegant-color white-text rounded-bottom">
-            <!-- Name -->
-            <h4 class="card-title">
-              {{ expert.firstName }} {{ expert.lastName }}
-            </h4>
-            <!-- Description -->
-            <p class="card-text white-text mb-4">{{ expert.description }}</p>
-            <!--
-              Provides extra visual weight and identifies the primary action in a set of buttons
-            -->
-            <a
-              (click)="expertClick(expert.id)"
-              mdbBtn
-              color="primary"
-              class="waves-light"
-              mdbWavesEffect
-              >Read more</a
-            >
+          <!-- Card deck -->
+          <div class="card-deck">
+              <!-- Card -->
+              <div *ngFor="let expert of experts" class="card mb-4">
+
+                <!--Card image-->
+                <div class="view overlay">
+                  <img class="card-img-top" src={{expert.image}} alt="Card image cap">
+                  <a (click)=expertClick(expert.id)>
+                    <div class="mask rgba-white-slight"></div>
+                  </a>
+                </div>
+
+                <!--Card content-->
+                <div class="card-body elegant-color white-text rounded-bottom">
+
+                  <!--Name-->
+                  <h4 class="card-title">{{expert.firstName}} {{expert.lastName}}</h4>
+                  <!--Description-->
+                  <p class="card-text white-text mb-4">{{expert.description}}</p>
+                  <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+                  <a (click)=expertClick(expert.id) mdbBtn color="primary" class="waves-light" mdbWavesEffect>Read more</a>
+
+                </div>
+
+              </div>
+              <!-- Card -->
           </div>
+          <!-- Card deck -->
         </div>
-        <!-- Card -->
-      </div>
-      <!-- Card deck -->
+          <!-- Card -->
+      <a (click)=searchClick() mdbBtn color="default" class="waves-light" mdbWavesEffect>Search expert</a>
     </div>
-    <!-- Card -->
-    <a
-      (click)="searchClick()"
-      mdbBtn
-      color="default"
-      class="waves-light"
-      mdbWavesEffect
-      >Search expert</a
-    >
+
   </div>
-</div>

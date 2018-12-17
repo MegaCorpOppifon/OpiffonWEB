@@ -12,7 +12,7 @@
             <!--Card image-->
             <div class="view overlay">
               <img class="card-img-top" src={{expert.image}} alt="Card image cap">
-              <a (click)=expertRouting(expert.id)>
+              <a href="/expert/{{expert.id}}">
                 <div class="mask rgba-white-slight"></div>
               </a>
             </div>
@@ -25,7 +25,7 @@
               <!--Description-->
               <p class="card-text white-text mb-4">{{expert.description}}</p>
               <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
-              <a (click)=expertRouting(expert.id) mdbBtn color="primary" class="waves-light" mdbWavesEffect>Read more</a>
+              <a href="/expert/{{expert.id}}" mdbBtn color="primary" class="waves-light" mdbWavesEffect>Read more</a>
 
             </div>
 
@@ -79,9 +79,9 @@
           <a href="" class="list-group-item active waves-effect disabled">
             News feed
           </a>
-          <div *ngFor="let feed of newsfeed">
+          <div *ngFor="let appointment of appointments">
             <a href="" class="list-group-item list-group-item-action waves-effect">
-              {{feed}}
+              {{appointment}}
             </a>
           </div>
         </div>
@@ -95,7 +95,7 @@
             Favorites
           </a>
           <div *ngFor="let favorite of favorites">
-            <a (click)=expertRouting(favorite.id) class="list-group-item list-group-item-action waves-effect">
+            <a (click)=favoriteClick(favorite.id) class="list-group-item list-group-item-action waves-effect">
               {{favorite.firstName}} {{favorite.lastName}}
             </a>
           </div>
