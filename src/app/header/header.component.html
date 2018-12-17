@@ -30,12 +30,6 @@
         </a>
       </li>
 
-      <li class="nav-item">
-        <a class="nav-link" (click)="profileRouting()">Change Profile Picture</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" (click)="calendarRouting()">My calendar</a>
-      </li>
       <div *ngIf="!isLoggedIn">
         <li class="nav-item active">
           <div class="container">
@@ -50,6 +44,18 @@
               Login
             </button>
           </div>
+        </li>
+      </div>
+      <div *ngIf="isLoggedIn">
+        <li class="nav-item">
+          <a class="nav-link" (click)="profileRouting()"
+            >Change Profile Picture</a
+          >
+        </li>
+      </div>
+      <div *ngIf="isLoggedIn">
+        <li class="nav-item">
+          <a class="nav-link" (click)="calendarRouting()">My calendar</a>
         </li>
       </div>
       <div *ngIf="isLoggedIn">
