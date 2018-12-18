@@ -9,7 +9,8 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "build_stag": "ng build --prod --configuration=staging",
-    "build_prod": "ng build --prod --configuration=production"
+    "build_prod": "ng build --prod --configuration=production",
+    "build_pre": "ng build --prod"
   },
   "private": true,
   "dependencies": {
