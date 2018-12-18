@@ -28,7 +28,7 @@ export class HeaderComponent implements OnInit  {
 
 
   ngOnInit() {
-    this.logo = environment.apiUrl + '/Logo.jpg';
+    this.logo = environment.apiUrl + '/Logo.png';
     this.loginForm = this.formBuilder.group({
       email: ['', Validators.required],
       password: ['', Validators.required]
