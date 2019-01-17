@@ -82,7 +82,7 @@ export class HeaderComponent implements OnInit  {
 
     calendarRouting() {
       this.router.navigate([
-        '/calendar/' + this.authenticationService.currentUser().id
+        '/calendar'
       ]);
     }
 
